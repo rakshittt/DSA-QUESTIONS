@@ -45,54 +45,73 @@ public:
         cout << endl;
     }
 
-    void deleteFromheap(){
-        if(size==0){
-            cout<<"Nothing to delete"<<endl;
-            return ;
+    void deleteFromheap()
+    {
+        if (size == 0)
+        {
+            cout << "Nothing to delete" << endl;
+            return;
         }
-        arr[1]=arr[size];
+        arr[1] = arr[size];
         size--;
 
         // take root node to the correct position
-        int i=1;
-        while(i<size){
-            int leftindex =2*i;
-            int rightindex = 2*i+1;
+        int i = 1;
+        while (i < size)
+        {
+            int leftindex = 2 * i;
+            int rightindex = 2 * i + 1;
 
-            if(leftindex <size && arr[i] < arr[leftindex])
+            if (leftindex < size && arr[i] < arr[leftindex])
             {
-                swap(arr[i],arr[leftindex]);
-                i=leftindex;
+                swap(arr[i], arr[leftindex]);
+                i = leftindex;
             }
-            else if(rightindex < size && arr[i] < arr[rightindex]){
-                 swap(arr[i],arr[rightindex]);
-                   i=rightindex;
+            else if (rightindex < size && arr[i] < arr[rightindex])
+            {
+                swap(arr[i], arr[rightindex]);
+                i = rightindex;
             }
-            else{
+            else
+            {
                 return;
             }
         }
     }
-
-
 };
- void heapify(int arr[],int n , int i){
-        int largest = i;
-        int left = 2*i;
-        int right = 2*i +1;
+void heapify(int arr[], int n, int i)
+{
+    int largest = i;
+    int left = 2 * i;
+    int right = 2 * i + 1;
 
-        if( left <n && arr[largest] <arr[left]){
-            largest = left;
-        }
-        if(right < n && arr[largest] < arr[right]){
-            largest = right;
-        }
+    if (left < n && arr[largest] < arr[left])
+    {
+        largest = left;
+    }
+    if (right < n && arr[largest] < arr[right])
+    {
+        largest = right;
+    }
 
-        if(largest != i){
-            swap(arr[largest], arr[i]);
-            heapify(arr,n ,largest);
-        }
-    };
+    if (largest != i)
+    {
+        swap(arr[largest], arr[i]);
+        heapify(arr, n, largest);
+    }
+};
+
+void heapSort(int arr[],int n){
+    int size = n; 
+    while(size >1){
+        // step 1 : 
+        swap(arr[size], arr[1]);
+        size--;
+
+        //step 2 :
+        heapify(arr, size ,1);
+    }
+}
 
 int main()
 {
@@ -108,16 +127,30 @@ int main()
     h.deleteFromheap();
     h.print();
 
-    int arr[6]={10,-5,14,42,50,3};
-    int n=5;
-    for(int i=n/2; i>0 ;i--){
-        heapify(arr,n ,i);
+    int arr[6] = {10, -5, 14, 42, 50, 3};
+    int n = 5;
+
+    // creation of Heap 
+    for (int i = n / 2; i > 0; i--)
+    {
+        heapify(arr, n, i);
     }
 
-    cout<< " New Array : "<<endl;
-    for(int i=1;i<=n;i++){
-        cout<<arr[i]<<" ";
+    cout << " New Array : " << endl;
+    for (int i = 1; i <= n; i++)
+    {
+        cout << arr[i] << " ";
     }
-    cout<<endl;
+    cout << endl;
 
+    // Heap Sort 
+    heapSort(arr, n );
+
+    
+    cout << " New  Sorted Array : " << endl;
+    for (int i = 1; i <= n; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
 }
